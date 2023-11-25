@@ -6,8 +6,11 @@ create table [test_al].[User](
 	password varchar(255) not null,
 	name varchar(30) not null,
 	lastname varchar(30) not null,
-	active bit
+	active bit,
+	attemps int
 )
+
+insert into [test_al].[User] values ('andresl','testpass','Andres','Lozano',1,3)
 
 create table [test_al].Currency(
 	id int identity(1,1) primary key not null,
@@ -38,3 +41,8 @@ create table [test_al].[Log](
 	user_id int foreign key references [test_al].[User](id) not null,
 	log_date date not null
 )
+
+select * from [test_al].[User]
+select * from [test_al].[Currency]
+select * from [test_al].[Office]
+select * from [test_al].[Log]
