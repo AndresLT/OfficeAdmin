@@ -138,13 +138,13 @@ namespace OfficeAdmin_API.Services
 
                 if (res.Count > 0)
                 {
-                    response.Message = "success";
+                    response.Status = "success";
                     response.Message = "Usuarios consultados correctamente.";
                     response.Result = res;
                 }
                 else
                 {
-                    response.Message = "info";
+                    response.Status = "info";
                     response.Message = "No se encontraron usuarios.";
                     response.Result = new List<UserAdminResponse>();
                 }
@@ -211,11 +211,10 @@ namespace OfficeAdmin_API.Services
             try
             {
                 var user = _db.Users.Where(x => x.Username == modifyUser.Username).FirstOrDefault();
-                if (user == null)
+                if (user != null)
                 {
                     user.Name = modifyUser.Name;
                     user.Lastname = modifyUser.Lastname;
-                    user.Password = encryptService.EncryptAsync(modifyUser.Password).Result;
                     user.Active = modifyUser.Active;
                     user.Attemps = 3;
 
@@ -327,13 +326,13 @@ namespace OfficeAdmin_API.Services
 
                 if (logs.Count > 0)
                 {
-                    response.Message = "success";
+                    response.Status = "success";
                     response.Message = "Logs consultados correctamente.";
-                    response.Result = logsResponse;
+                    response.Result = logsResponse.OrderByDescending(x => x.Id).ToList();
                 }
                 else
                 {
-                    response.Message = "info";
+                    response.Status = "info";
                     response.Message = "No se encontraron logs.";
                     response.Result = new List<LogResponse>();
                 }

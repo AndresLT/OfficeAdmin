@@ -29,7 +29,7 @@ export class OfficeComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private apiServive: ApiService, public dialog: MatDialog){
+  constructor(private apiService: ApiService, public dialog: MatDialog){
   }
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -54,16 +54,20 @@ export class OfficeComponent implements OnInit, AfterViewInit {
         action: action,
         dataToUpdate: dataToUpdate
       },
+    }).afterClosed().subscribe(res => {
+      if(res == "success"){
+        this.getOffices(true)
+      }
     });
   }
 
   getOffices(all: boolean){
-    this.apiServive.get<Office[]>('Office/GetOffices/'+all).subscribe(res =>{
+    this.apiService.get<Office[]>('Office/GetOffices/'+all).subscribe(res =>{
       console.log('Sucursales', res.result);
       this.dataSource = new MatTableDataSource<Office>(res.result)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.apiServive.loading = false
+      this.apiService.showMessages(res)
     })
   }
 

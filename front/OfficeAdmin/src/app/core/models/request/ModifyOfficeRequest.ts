@@ -1,4 +1,4 @@
-export interface CreateOfficeRequest{
+export interface ModifyOfficeRequest{
   id: number
   code: number
   identification: string

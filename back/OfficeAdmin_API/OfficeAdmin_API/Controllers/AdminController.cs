@@ -94,7 +94,7 @@ namespace OfficeAdmin_API.Controllers
         }
 
         [HttpPost]
-        public async Task<Response<string>> ModifyUser(ModifyUserRequest user)
+        public async Task<Response<string>> ModifyUser([FromBody] ModifyUserRequest user)
         {
             Response<string> response = new Response<string>();
             try

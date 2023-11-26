@@ -1,11 +1,76 @@
-
 <div class="dialog-container">
 
-  @if (data.action == 'create') {
-
+  @if (data.action == "create") {
     <h4>Creación de usuario</h4>
-  }@else if (data.action == 'modify') {
+
+    <form action="" [formGroup]="createForm">
+      <div class="form-container">
+
+        <div class="row-1">
+          <mat-form-field appearance="outline" style="flex-grow: 1;">
+            <mat-label>Usuario</mat-label>
+            <input matInput placeholder="Usuario" type="text" formControlName="username" (keypress)="validateInput($event)" (paste)="pasteInput($event)">
+          </mat-form-field>
+
+        </div>
+        <div class="row-1">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Identificación" type="text" formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Apellido</mat-label>
+            <input matInput placeholder="Lastname" type="text" formControlName="lastname">
+          </mat-form-field>
+        </div>
+
+        <div class="row-1">
+          <mat-form-field appearance="outline" style="flex-grow: 1;">
+            <mat-label>Contraseña</mat-label>
+            <input matInput placeholder="Contraseña" [type]="hidePass ? 'password' : 'text'" formControlName="password">
+            <button mat-icon-button matSuffix (click)="hidePass = !hidePass" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePass">
+              <mat-icon>{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+
+        </div>
+      <button mat-raised-button color="primary" [disabled]="createForm.invalid" (click)="createUser()">Crear usuario</button>
+
+      </div>
+    </form>
+
+  }@else if (data.action == "modify"){
     <h4>Modificación de usuario</h4>
 
+    <form action="" [formGroup]="updateForm">
+      <div class="form-container">
+
+        <div class="row-1">
+          <mat-form-field appearance="outline">
+            <mat-label>Usuario</mat-label>
+            <input matInput placeholder="Usuario" type="text" formControlName="username">
+          </mat-form-field>
+
+        </div>
+        <div class="row-1">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Nombre" type="text" formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Apellido</mat-label>
+            <input matInput placeholder="Apellido" type="text" formControlName="lastname">
+          </mat-form-field>
+        </div>
+
+        <mat-checkbox formControlName="active" color="primary">Activo</mat-checkbox>
+      <button mat-raised-button color="primary" style="align-self: center;" [disabled]="updateForm.invalid" (click)="updateUser()">Actualizar sucursal</button>
+
+      </div>
+    </form>
   }
 </div>

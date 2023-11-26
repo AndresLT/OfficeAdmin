@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,14 +20,14 @@ import { CurrencyFormComponent } from './currency-form/currency-form.component';
   templateUrl: './currency.component.html',
   styleUrl: './currency.component.scss'
 })
-export class CurrencyComponent {
+export class CurrencyComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Code', 'Description', 'Active','Modify'];
   dataSource: MatTableDataSource<Currency> =new MatTableDataSource<Currency>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private apiServive: ApiService, public dialog: MatDialog){
+  constructor(private apiService: ApiService, public dialog: MatDialog){
   }
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -43,7 +43,11 @@ export class CurrencyComponent {
         action: action,
         dataToUpdate: dataToUpdate
       },
-    });
+    }).afterClosed().subscribe(res => {
+      if(res == "success"){
+        this.getCurrencies(true)
+      }
+    });;
   }
 
   applyFilter(event: Event) {
@@ -56,12 +60,13 @@ export class CurrencyComponent {
   }
 
   getCurrencies(all: boolean){
-    this.apiServive.get<Currency[]>('Currency/GetCurrencies/'+all).subscribe(res =>{
+    this.apiService.get<Currency[]>('Currency/GetCurrencies/'+all).subscribe(res =>{
       console.log('Monedas', res.result);
       this.dataSource = new MatTableDataSource<Currency>(res.result)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.apiServive.loading = false
+      this.apiService.showMessages(res)
+
     })
   }
 }

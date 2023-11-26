@@ -67,30 +67,11 @@ export class LoginComponent {
 
   login(){
     this.apiService.get<string>('Admin/Login/'+this.loginForm.controls['username'].value + '/'+this.loginForm.controls['password'].value).subscribe(res => {
+      this.apiService.showMessages(res)
       if(res.status == "success"){
-        Swal.fire({
-          icon: 'success',
-          text: res.message
-        })
         this.router.navigate(['home'])
         this.localService.set('user',JSON.stringify(res.result))
-      }else if(res.status == 'info'){
-        Swal.fire({
-          icon: 'info',
-          text: res.message
-        })
-      }else if(res.status == "warning"){
-        Swal.fire({
-          icon: 'warning',
-          text: res.message
-        })
-      }else if(res.status == 'error'){
-        Swal.fire({
-          icon: 'error',
-          text: res.message
-        })
       }
-      this.apiService.loading = false
     })
   }
 
@@ -100,29 +81,10 @@ export class LoginComponent {
       password: this.changePasswordForm.controls['password'].value!
     }
     this.apiService.post<string>('Admin/ChangeUserPassword/',changePassReq).subscribe(res =>{
+      this.apiService.showMessages(res)
       if(res.status == "success"){
-        Swal.fire({
-          icon: 'success',
-          text: res.message
-        })
         this.changeForm('login')
-      }else if(res.status == 'info'){
-        Swal.fire({
-          icon: 'info',
-          text: res.message
-        })
-      }else if(res.status == "warning"){
-        Swal.fire({
-          icon: 'warning',
-          text: res.message
-        })
-      }else if(res.status == 'error'){
-        Swal.fire({
-          icon: 'error',
-          text: res.message
-        })
       }
-      this.apiService.loading = false
     })
   }
 
@@ -134,29 +96,10 @@ export class LoginComponent {
       password: this.registerForm.controls['password'].value!
     }
     this.apiService.post<string>('Admin/CreateUser/',registerUserReq).subscribe(res =>{
+      this.apiService.showMessages(res)
       if(res.status == "success"){
-        Swal.fire({
-          icon: 'success',
-          text: res.message
-        })
         this.changeForm('login')
-      }else if(res.status == 'info'){
-        Swal.fire({
-          icon: 'info',
-          text: res.message
-        })
-      }else if(res.status == "warning"){
-        Swal.fire({
-          icon: 'warning',
-          text: res.message
-        })
-      }else if(res.status == 'error'){
-        Swal.fire({
-          icon: 'error',
-          text: res.message
-        })
       }
-      this.apiService.loading = false
     })
   }
 

@@ -36,7 +36,7 @@ namespace OfficeAdmin_API.Controllers
         }
 
         [HttpPost]
-        public async Task<Response<string>> CreateCurrency(CreateCurrencyRequest req)
+        public async Task<Response<string>> CreateCurrency([FromBody] CreateCurrencyRequest req)
         {
             Response<string> response = new Response<string>();
             try
@@ -54,7 +54,7 @@ namespace OfficeAdmin_API.Controllers
         }
 
         [HttpPost]
-        public async Task<Response<string>> ModifyCurrency(ModifyCurrencyRequest req)
+        public async Task<Response<string>> ModifyCurrency([FromBody] ModifyCurrencyRequest req)
         {
             Response<string> response = new Response<string>();
             try

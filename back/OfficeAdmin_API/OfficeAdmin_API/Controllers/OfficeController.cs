@@ -36,7 +36,7 @@ namespace OfficeAdmin_API.Controllers
         }
 
         [HttpPost]
-        public async Task<Response<string>> CreateOffice(CreateOfficeRequest req)
+        public async Task<Response<string>> CreateOffice([FromBody] CreateOfficeRequest req)
         {
             Response<string> response = new Response<string>();
             try
@@ -54,7 +54,7 @@ namespace OfficeAdmin_API.Controllers
         }
 
         [HttpPost]
-        public async Task<Response<string>> ModifyOffice(ModifyOfficeRequest req)
+        public async Task<Response<string>> ModifyOffice([FromBody] ModifyOfficeRequest req)
         {
             Response<string> response = new Response<string>();
             try

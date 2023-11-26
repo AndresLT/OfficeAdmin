@@ -1,9 +1,91 @@
 <div class="dialog-container">
-  @if (data.action == 'create') {
 
+  @if (data.action == "create") {
     <h4>Creación de sucursal</h4>
-  }@else if (data.action == 'modify') {
+
+    <form action="" [formGroup]="createForm">
+      <div class="form-container">
+
+        <div class="row-1">
+          <mat-form-field appearance="outline">
+            <mat-label>Código</mat-label>
+            <input matInput placeholder="Codigo" type="number" formControlName="code">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Identificación</mat-label>
+            <input matInput placeholder="Identificación" type="text" formControlName="identification">
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Descripción</mat-label>
+          <input matInput placeholder="Descripción" type="text" formControlName="description">
+        </mat-form-field>
+
+        <div class="row-1">
+          <mat-form-field appearance="outline">
+            <mat-label>Dirección</mat-label>
+            <input matInput placeholder="Dirección" type="text" formControlName="address">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Moneda</mat-label>
+            <mat-select formControlName="currency">
+              @for (currency of currencies; track currency) {
+                <mat-option [value]="currency.id">{{currency.code}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      <button mat-raised-button color="primary" [disabled]="createForm.invalid" (click)="createOffice()">Crear sucursal</button>
+
+      </div>
+    </form>
+
+  }@else if (data.action == "modify"){
     <h4>Modificación de sucursal</h4>
 
+    <form action="" [formGroup]="updateForm">
+      <div class="form-container">
+
+        <div class="row-1">
+          <mat-form-field appearance="outline">
+            <mat-label>Código</mat-label>
+            <input matInput placeholder="Codigo" type="number" formControlName="code">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Identificación</mat-label>
+            <input matInput placeholder="Identificación" type="text" formControlName="identification">
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Descripción</mat-label>
+          <input matInput placeholder="Descripción" type="text" formControlName="description">
+        </mat-form-field>
+
+        <div class="row-1">
+          <mat-form-field appearance="outline">
+            <mat-label>Dirección</mat-label>
+            <input matInput placeholder="Dirección" type="text" formControlName="address">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Moneda</mat-label>
+            <mat-select formControlName="currency">
+              @for (currency of currencies; track currency) {
+                <mat-option [value]="currency.id">{{currency.code}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <mat-checkbox formControlName="active" color="primary">Activo</mat-checkbox>
+      <button mat-raised-button color="primary" style="align-self: center;" [disabled]="updateForm.invalid" (click)="updateOffice()">Actualizar sucursal</button>
+
+      </div>
+    </form>
   }
 </div>

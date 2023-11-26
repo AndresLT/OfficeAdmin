@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,14 +20,14 @@ import { UserFormComponent } from './user-form/user-form.component';
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })
-export class UserComponent {
+export class UserComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Username', 'Name', 'Lastname','Active','Modify'];
   dataSource: MatTableDataSource<UserAdminResponse> =new MatTableDataSource<UserAdminResponse>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private apiServive: ApiService, public dialog: MatDialog){
+  constructor(private apiService: ApiService, public dialog: MatDialog){
   }
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -43,7 +43,11 @@ export class UserComponent {
         action: action,
         dataToUpdate: dataToUpdate
       },
-    });
+    }).afterClosed().subscribe(res => {
+      if(res == "success"){
+        this.getUsers()
+      }
+    });;
   }
 
   applyFilter(event: Event) {
@@ -56,12 +60,12 @@ export class UserComponent {
   }
 
   getUsers(){
-    this.apiServive.get<UserAdminResponse[]>('Admin/GetUsers').subscribe(res =>{
-      console.log('Usuarios', res.result);
+    this.apiService.get<UserAdminResponse[]>('Admin/GetUsers').subscribe(res =>{
+      console.log('Usuarios', res);
       this.dataSource = new MatTableDataSource<UserAdminResponse>(res.result)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.apiServive.loading = false
+      this.apiService.showMessages(res)
     })
   }
 }

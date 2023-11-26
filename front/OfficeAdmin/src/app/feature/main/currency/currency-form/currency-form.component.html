@@ -1,10 +1,50 @@
 <div class="dialog-container">
-  @if (data.action == 'create') {
 
-    <h4>Creación de moneda</h4>
-  }@else if (data.action == 'modify') {
-    <h4>Modificación de moneda</h4>
+  @if (data.action == "create") {
+    <h4>Creación de usuario</h4>
 
+    <form action="" [formGroup]="createForm">
+      <div class="form-container">
+
+          <mat-form-field appearance="outline" style="flex-grow: 1;">
+            <mat-label>Codigo</mat-label>
+            <input matInput placeholder="Codigo" type="text" formControlName="code" (keypress)="validateInput($event)" (paste)="pasteInput($event)">
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline" style="flex-grow: 1;">
+            <mat-label>Descripcion</mat-label>
+            <input matInput placeholder="Descripción" type="text" formControlName="description">
+          </mat-form-field>
+
+      <button mat-raised-button color="primary" [disabled]="createForm.invalid" (click)="createCurrency()">Crear moneda</button>
+
+      </div>
+    </form>
+
+  }@else if (data.action == "modify"){
+    <h4>Modificación de usuario</h4>
+
+    <form action="" [formGroup]="updateForm">
+      <div class="form-container">
+
+        <mat-form-field appearance="outline" style="flex-grow: 1;">
+          <mat-label>Codigo</mat-label>
+          <input matInput placeholder="Codigo" type="text" formControlName="code" (keypress)="validateInput($event)" (paste)="pasteInput($event)">
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline" style="flex-grow: 1;">
+          <mat-label>Descripcion</mat-label>
+          <input matInput placeholder="Descripción" type="text" formControlName="description">
+        </mat-form-field>
+
+        <mat-checkbox formControlName="active" color="primary">Activo</mat-checkbox>
+
+
+    <button mat-raised-button color="primary" [disabled]="updateForm.invalid" (click)="updateCurrency()">Actualizar moneda</button>
+
+    </div>
+    </form>
   }
-
 </div>
