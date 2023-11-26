@@ -10,17 +10,13 @@ create table [test_al].[User](
 	attemps int
 )
 
-insert into [test_al].[User] values ('andresl','testpass','Andres','Lozano',1,3)
-
 create table [test_al].Currency(
 	id int identity(1,1) primary key not null,
 	code varchar(3) not null,
-	description varchar(50)
+	description varchar(50),
+	active bit
 )
 
-insert into [test_al].Currency values('COP','Peso Colombiano')
-insert into [test_al].Currency values('USD','Dólar Americano')
-insert into [test_al].Currency values('EUR','Euro')
 
 create table [test_al].Office (
 	id int identity(1,1) primary key not null,
@@ -32,7 +28,8 @@ create table [test_al].Office (
 	create_user int foreign key references [test_al].[User](id),
 	create_date date,
 	modify_user int foreign key references [test_al].[User](id),
-	modify_date date
+	modify_date date,
+	active bit
 )
 
 create table [test_al].[Log](

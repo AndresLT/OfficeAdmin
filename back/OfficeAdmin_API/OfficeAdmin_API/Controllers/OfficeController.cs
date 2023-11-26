@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OfficeAdmin_API.Models;
+using OfficeAdmin_API.Models.Request;
 using OfficeAdmin_API.Models.Response;
 using OfficeAdmin_API.Services.Interfaces;
 
@@ -16,20 +18,57 @@ namespace OfficeAdmin_API.Controllers
         }
 
         [HttpGet]
-        public async Task<Response<string>> GetOffices()
+        public async Task<Response<List<Office>>> GetOffices(bool all)
         {
-            Response<string> response = new Response<string>();
+            Response<List<Office>> response = new Response<List<Office>>();
             try
             {
-                return response;
+                var res = await _officeService.GetOffices(all);
+                response = res;
             }
             catch (Exception ex)
             {
                 response.Status = "error";
                 response.Message = ex.Message;
                 response.Result = null;
-                return response;
             }
+            return response;
+        }
+
+        [HttpPost]
+        public async Task<Response<string>> CreateOffice(CreateOfficeRequest req)
+        {
+            Response<string> response = new Response<string>();
+            try
+            {
+                var res = await _officeService.CreateOffice(req);
+                response = res;
+            }
+            catch (Exception ex)
+            {
+                response.Status = "error";
+                response.Message = ex.Message;
+                response.Result = null;
+            }
+            return response;
+        }
+
+        [HttpPost]
+        public async Task<Response<string>> ModifyOffice(ModifyOfficeRequest req)
+        {
+            Response<string> response = new Response<string>();
+            try
+            {
+                var res = await _officeService.ModifyOffice(req);
+                response = res;
+            }
+            catch (Exception ex)
+            {
+                response.Status = "error";
+                response.Message = ex.Message;
+                response.Result = null;
+            }
+            return response;
         }
     }
 }

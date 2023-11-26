@@ -1,3 +1,53 @@
 button{
   font-weight: bold;
 }
+
+mat-form-field{
+  font-size: 0.8rem;
+}
+
+.link{
+  cursor: pointer;
+  color: #3f51b5;
+  text-decoration: underline;
+}
+
+.main-container{
+  height: 100vh;
+  width: 100%;
+  background-image: url("../../../assets/images/blue-wave1.svg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container{
+  border: 1px #DDD solid;
+  border-radius: 1rem;
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.30);
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  padding: 1rem;
+}
+
+.form-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.passwordMatch{
+  color: green;
+  align-self: center;
+}
+
+.passwordNoMatch{
+  color: red;
+  align-self: center;
+
+}

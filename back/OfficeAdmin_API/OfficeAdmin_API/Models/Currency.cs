@@ -13,6 +13,7 @@ namespace OfficeAdmin_API.Models
         public int Id { get; set; }
         public string Code { get; set; } = null!;
         public string? Description { get; set; }
+        public bool Active { get; set; }
 
         public virtual ICollection<Office> Offices { get; set; }
     }

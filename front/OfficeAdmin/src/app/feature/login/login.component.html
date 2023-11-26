@@ -1,1 +1,131 @@
-<button mat-button (click)="onClick()">Iniciar sesión</button>
+
+<div class="main-container">
+  @if (actualForm == 'login') {
+    <div class="login-container">
+      <h3>Inicia sesión</h3>
+      <form action="" [formGroup]="loginForm">
+          <div class="form-container">
+          <mat-form-field appearance="outline">
+            <mat-label>Usuario</mat-label>
+            <input matInput placeholder="Usuario" type="text" formControlName="username" (keypress)="validateInput($event)" (paste)="pasteInput($event)">
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput placeholder="Contraseña" [type]="hidePass ? 'password' : 'text'" formControlName="password">
+            <button mat-icon-button matSuffix (click)="hidePass = !hidePass" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePass">
+              <mat-icon>{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <button mat-raised-button color="primary" [disabled]="loginForm.invalid" (click)="login()">Iniciar sesión</button>
+
+        </div>
+        </form>
+
+      <p class="change-password">¿Olvidaste tu contraseña? Cámbiala <span class="link" (click)="changeForm('changePassword')">aquí</span>!</p>
+      <p class="register-text">¿No tienes cuenta aún? Regístrate <span class="link" (click)="changeForm('register')">aquí</span>!</p>
+    </div>
+  }@else if (actualForm == 'changePassword') {
+    <div class="login-container">
+      <h3>Cambio de contraseña</h3>
+      <form action="" [formGroup]="changePasswordForm">
+          <div class="form-container">
+          <mat-form-field appearance="outline">
+            <mat-label>Usuario</mat-label>
+            <input matInput placeholder="Usuario" type="text" formControlName="username" (keypress)="validateInput($event)" (paste)="pasteInput($event)">
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput placeholder="Contraseña" [type]="hidePass ? 'password' : 'text'" formControlName="password" (input)="passwordChange()">
+            <button mat-icon-button matSuffix (click)="hidePass = !hidePass" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePass">
+              <mat-icon>{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Confirmar contraseña</mat-label>
+            <input matInput placeholder="Contraseña" [type]="hidePassConfirm ? 'password' : 'text'" formControlName="confirmPassword" (input)="passwordChange()">
+            <button mat-icon-button matSuffix (click)="hidePassConfirm = !hidePassConfirm" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassConfirm">
+              <mat-icon>{{hidePassConfirm ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+
+          @if (passwordMatch) {
+            <p class="passwordMatch">Las contraseñas coinciden</p>
+
+          }@else {
+
+            <p class="passwordNoMatch">Las contraseñas no coinciden</p>
+          }
+
+          <button mat-raised-button color="primary" [disabled]="changePasswordForm.invalid || !passwordMatch" (click)="changePassword()">Cambiar contraseña</button>
+
+        </div>
+        </form>
+
+      <p class="change-password">¿Ya tienes un usuario y contraseña? Inicia sesión <span class="link" (click)="changeForm('login')">aquí</span>!</p>
+      <p class="register-text">¿No tienes cuenta aún? Regístrate <span class="link" (click)="changeForm('register')">aquí</span>!</p>
+    </div>
+  }@else if (actualForm == 'register') {
+    <div class="login-container">
+      <h3>Regístrate</h3>
+      <form action="" [formGroup]="registerForm">
+          <div class="form-container">
+          <mat-form-field appearance="outline">
+            <mat-label>Usuario</mat-label>
+            <input matInput placeholder="Usuario" type="text" formControlName="username" (keypress)="validateInput($event)" (paste)="pasteInput($event)">
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Usuario" type="text" formControlName="name">
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Apellido</mat-label>
+            <input matInput placeholder="Usuario" type="text" formControlName="lastname">
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput placeholder="Contraseña" [type]="hidePass ? 'password' : 'text'" formControlName="password" (input)="passwordChangeRegister()">
+            <button mat-icon-button matSuffix (click)="hidePass = !hidePass" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePass">
+              <mat-icon>{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Confirmar contraseña</mat-label>
+            <input matInput placeholder="Contraseña" [type]="hidePassConfirm ? 'password' : 'text'" formControlName="confirmPassword"(input)="passwordChangeRegister()">
+            <button mat-icon-button matSuffix (click)="hidePassConfirm = !hidePassConfirm" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassConfirm">
+              <mat-icon>{{hidePassConfirm ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+
+          @if (passwordMatchRegister) {
+            <p class="passwordMatch">Las contraseñas coinciden</p>
+
+          }@else {
+
+            <p class="passwordNoMatch">Las contraseñas no coinciden</p>
+          }
+
+          <button mat-raised-button color="primary" [disabled]="registerForm.invalid || !passwordMatchRegister" (click)="registerUser()">Registrarse</button>
+
+        </div>
+        </form>
+
+        <p class="register-text">¿Ya tienes un usuario y contraseña? Inicia sesión <span class="link" (click)="changeForm('login')">aquí</span>!</p>
+        <p class="change-password">¿Olvidaste tu contraseña? Cámbiala <span class="link" (click)="changeForm('changePassword')">aquí</span>!</p>
+    </div>
+  }
+
+
+</div>

@@ -15,6 +15,7 @@ namespace OfficeAdmin_API.Models
         public DateTime? CreateDate { get; set; }
         public int? ModifyUser { get; set; }
         public DateTime? ModifyDate { get; set; }
+        public bool Active { get; set; }
 
         public virtual User? CreateUserNavigation { get; set; }
         public virtual Currency? CurrencyNavigation { get; set; }

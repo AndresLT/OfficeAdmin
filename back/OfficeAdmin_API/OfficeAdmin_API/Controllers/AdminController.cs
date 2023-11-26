@@ -11,12 +11,13 @@ namespace OfficeAdmin_API.Controllers
     public class AdminController : ControllerBase
     {
         private readonly IAdminService _adminService;
+
         public AdminController(IAdminService adminService)
         {
             _adminService = adminService;
         }
 
-        [HttpGet]
+        [HttpGet("{username}/{password}")]
         public async Task<Response<UserResponse>> Login(string username, string password)
         {
             Response<UserResponse> response = new Response<UserResponse>();
@@ -35,7 +36,7 @@ namespace OfficeAdmin_API.Controllers
             return response;
         }
 
-        [HttpGet]
+        [HttpGet("{username}")]
         public async Task<Response<string>> Logout(string username)
         {
             Response<string> response = new Response<string>();
@@ -54,8 +55,27 @@ namespace OfficeAdmin_API.Controllers
             return response;
         }
 
+        [HttpGet]
+        public async Task<Response<List<UserAdminResponse>>> GetUsers()
+        {
+            Response<List<UserAdminResponse>> response = new Response<List<UserAdminResponse>>();
+            try
+            {
+                var result = await _adminService.GetUsers();
+                response = result;
+            }
+            catch (Exception ex)
+            {
+                response.Status = "error";
+                response.Message = ex.Message;
+                response.Result = null;
+            }
+
+            return response;
+        }
+
         [HttpPost]
-        public async Task<Response<string>> CreateUser(CreateUserRequest user)
+        public async Task<Response<string>> CreateUser([FromBody] CreateUserRequest user)
         {
             Response<string> response = new Response<string>();
             try
@@ -80,6 +100,44 @@ namespace OfficeAdmin_API.Controllers
             try
             {
                 var result = await _adminService.ModifyUser(user);
+                response = result;
+            }
+            catch (Exception ex)
+            {
+                response.Status = "error";
+                response.Message = ex.Message;
+                response.Result = null;
+            }
+
+            return response;
+        }
+
+        [HttpPost]
+        public async Task<Response<string>> ChangeUserPassword([FromBody] ChangeUserPasswordRequest req)
+        {
+            Response<string> response = new Response<string>();
+            try
+            {
+                var result = await _adminService.ChangeUserPassword(req);
+                response = result;
+            }
+            catch (Exception ex)
+            {
+                response.Status = "error";
+                response.Message = ex.Message;
+                response.Result = null;
+            }
+
+            return response;
+        }
+
+        [HttpGet]
+        public async Task<Response<List<LogResponse>>> GetLogs()
+        {
+            Response<List<LogResponse>> response = new Response<List<LogResponse>>();
+            try
+            {
+                var result = await _adminService.GetLogs();
                 response = result;
             }
             catch (Exception ex)
