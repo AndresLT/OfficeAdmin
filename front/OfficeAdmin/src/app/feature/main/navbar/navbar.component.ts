@@ -1,28 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { LocalService } from '../../../core/services/local.service';
 import { ApiService } from '../../../core/services/api.service';
 import { UserResponse } from '../../../core/models/response/UserResponse';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+
 import Swal from 'sweetalert2'
-import { NavbarComponent } from '../navbar/navbar.component';
+
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, MatProgressBarModule, NavbarComponent, RouterOutlet],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.scss'
 })
-export class HomeComponent implements OnInit {
+export class NavbarComponent {
+
   user: UserResponse
 
   constructor(private router: Router, private localService: LocalService, private apiService: ApiService){
     this.user = JSON.parse(this.localService.get('user'))
-  }
-  ngOnInit(): void {
-
   }
 
   logout(){

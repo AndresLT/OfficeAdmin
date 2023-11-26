@@ -1,0 +1,56 @@
+<div class="main-container">
+  <h2>Monedas</h2>
+
+  <div class="filter-buttons">
+    <mat-form-field appearance="outline">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="openDialog('create')">Crear moneda <mat-icon>add</mat-icon></button>
+
+  </div>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="Code">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </th>
+        <td mat-cell *matCellDef="let row"> {{row.code}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
+        <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+      </ng-container>
+
+      <!-- Fruit Column -->
+      <ng-container matColumnDef="Active">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+        <td mat-cell *matCellDef="let row"> {{row.active | status}} </td>
+      </ng-container>
+
+      <!-- Fruit Column -->
+      <ng-container matColumnDef="Modify">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Modificar </th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary" aria-label="Example icon button with a home icon" (click)="openDialog('modify',row)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No hay resultados para: "{{input.value}}"</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+</div>

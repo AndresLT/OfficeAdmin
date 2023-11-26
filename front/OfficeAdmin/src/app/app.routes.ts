@@ -5,7 +5,7 @@ import { authGuard } from './core/guards/auth.guard';
 import { loggedInGuard } from './core/guards/logged-in.guard';
 
 export const routes: Routes = [
-  {path: '', component: LoginComponent, canActivate: [loggedInGuard]},
-  {path: 'home', component: HomeComponent, canActivate: [authGuard]},
-  {path: '**', component: HomeComponent}
+  {path: '', loadComponent: () => import('./feature/login/login.component').then(m => m.LoginComponent), canActivate: [loggedInGuard]},
+  {path: 'home', loadChildren: () => import('./feature/main/main.routes').then(m => m.routes), canActivate: [authGuard]},
+  {path: '**', loadChildren: () => import('./feature/main/main.routes').then(m => m.routes), canActivate: [authGuard]}
 ];

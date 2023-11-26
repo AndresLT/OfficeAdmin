@@ -17,7 +17,7 @@ namespace OfficeAdmin_API.Controllers
             _officeService = officeService;
         }
 
-        [HttpGet]
+        [HttpGet("{all}")]
         public async Task<Response<List<Office>>> GetOffices(bool all)
         {
             Response<List<Office>> response = new Response<List<Office>>();

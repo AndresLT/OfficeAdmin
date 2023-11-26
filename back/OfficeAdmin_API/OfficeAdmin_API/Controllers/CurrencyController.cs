@@ -17,7 +17,7 @@ namespace OfficeAdmin_API.Controllers
             _currencyService = currencyService;
         }
 
-        [HttpGet]
+        [HttpGet("{all}")]
         public async Task<Response<List<Currency>>> GetCurrencies(bool all)
         {
             Response<List<Currency>> response = new Response<List<Currency>>();
